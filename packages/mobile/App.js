@@ -14,11 +14,14 @@ import { Router, Scene } from 'react-native-router-flux';
 import Chat from './src/components/chatlanding/chat';
 import Camera from './src/components/chatlanding/camara';
 import FileSystem from './src/components/chatlanding/files';
-import { checkPermission } from './src/components/notifications/notifications';
+import { notificationOpenedListener, checkPermission } from './src/components/notifications/notifications';
 
 export default function App() {
     useEffect(() => {
         checkPermission();
+        return function cleanup() {
+            notificationOpenedListener();
+        };
     });
     return (
         <Router>

@@ -10,7 +10,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { checkPermission } from '../notifications/notifications';
 import ChatHeader from './header';
 import ChatFooter from './chatfooter';
 import ChatBody from './chatbody';
@@ -30,15 +29,19 @@ export default function Chat(props) {
 
     useEffect(() => {
         socket.emit('user-join');
-
-        socket.on('user-history-chat', data => {
-            setData({ data });
-        });
+        socket.on(
+            'user-history-chat',
+            newData => {
+                if (JSON.stringify(data) !== JSON.stringify(newData)) {
+                    setData(newData);
+                }
+            },
+            [data]
+        );
 
         socket.on('chat-server', msg => {
             setData([...data, msg]);
         });
-        checkPermission();
     });
 
     return (

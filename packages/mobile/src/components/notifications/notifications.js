@@ -14,41 +14,29 @@ export async function checkPermission() {
     }
 }
 
-async function createNotificationListeners() {
-    /*
-     * Triggered when a particular notification has been received in foreground
-     * */
-    firebase.notifications().onNotification(function(notification) {
-        const { title, body } = notification;
-        showAlert(title, body);
-    });
-
-    /*
-     * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
-     * */
-    firebase.notifications().onNotificationOpened(function(notificationOpen) {
+export async function notificationOpenedListener() {
+    await firebase.notifications().onNotificationOpened(notificationOpen => {
         const { title, body } = notificationOpen.notification;
         showAlert(title, body);
-    });
-
-    /*
-     * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
-     * */
-    let notificationOpen;
-    notificationOpen = await firebase.notifications().getInitialNotification();
-    if (notificationOpen) {
-        const { title, body } = notificationOpen.notification;
-        showAlert(title, body);
-    }
-    /*
-     * Triggered for data only payload in foreground
-     * */
-    const messageListener = firebase.messaging().onMessage(message => {
-        //process data message
-        console.log(JSON.stringify(message));
     });
 }
 
+async function createNotificationListeners() {
+    /*
+     * Foreground Trigger
+     * */
+    firebase.notifications().onNotification(function(notification) {
+        const { title, body } = notification._data;
+        showAlert(title, body);
+    });
+    /*
+     * Background Trigger
+     * */
+    firebase.notifications().onNotificationOpened(notificationOpen => {
+        const { title, body } = notificationOpen.notification._data;
+        showAlert(title, body);
+    });
+}
 async function getToken() {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
     console.log(fcmToken);
