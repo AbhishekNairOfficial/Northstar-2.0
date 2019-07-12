@@ -4,7 +4,7 @@ export default text = StyleSheet.create({
     loginContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '90%',
+        width: '100%',
         padding: 15
     },
     inputText: {
@@ -12,6 +12,8 @@ export default text = StyleSheet.create({
         fontSize: 16,
         padding: 10,
         margin: 10,
+        borderWidth: 1,
+        borderColor: '#000',
         backgroundColor: '#EAE8E8'
     },
     buttonStyle: {

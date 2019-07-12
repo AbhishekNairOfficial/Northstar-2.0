@@ -60,7 +60,7 @@ async function getToken() {
 
     console.log('External FCMTOKEN', fcmToken);
 }
-function showAlert(title, body) {
+export function showAlert(title, body) {
     Alert.alert(title, body, [{ text: 'OK', onPress: () => console.log('OK Pressed') }], { cancelable: false });
 }
 requestPermission = async () => {

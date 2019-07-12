@@ -14,6 +14,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import Chat from './src/components/chatlanding/chat';
 import Camera from './src/components/chatlanding/camara';
 import FileSystem from './src/components/chatlanding/files';
+import Login from './src/components/login';
 import { notificationOpenedListener, checkPermission } from './src/components/notifications/notifications';
 
 export default function App() {
@@ -26,7 +27,8 @@ export default function App() {
     return (
         <Router>
             <Scene key="root">
-                <Scene key="chat" component={Chat} title="Chat" initial hideBackImage={true}></Scene>
+                <Scene key="login" component={Login} title="Login" initial hideBackImage={true}></Scene>
+                <Scene key="chat" component={Chat} title="Chat" hideBackImage={true}></Scene>
                 <Scene key="camera" component={Camera} title="Camera" hideBackImage={true}></Scene>
                 <Scene key="files" component={FileSystem} title="FileSystem" hideBackImage={true}></Scene>
             </Scene>
